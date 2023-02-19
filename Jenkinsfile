@@ -17,5 +17,25 @@ pipeline {
 				}
 			}
     }		
+	stage('Build') { 
+            steps { 
+               withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
+                 script{
+                 app =  docker.build("asg")
+                 }
+               }
+            }
+    }
+
+	stage('Push') {
+            steps {
+                script{
+                    docker.withRegistry('659026651741.dkr.ecr.us-east-1.amazonaws.com/asg', 'ecr:us-east-1:aws-migui-credentials') {
+                    app.push("latest")a
+                    }
+                }
+            }
+    	}
+	    
   }
 }

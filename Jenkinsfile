@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script{
                     docker.withRegistry('659026651741.dkr.ecr.us-east-1.amazonaws.com/asg', 'ecr:us-east-1:aws-migui-credentials') {
-                    app.push("latest")a
+                    app.push("latest")
                     }
                 }
             }

@@ -8,6 +8,14 @@ pipeline {
             steps {	
 		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=webdevops-project -Dsonar.organization=webdevops-project -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=acf8bb253651b20c4f245ee3da6928df15842552'
 			}
-        } 
+    }
+
+	stage('RunSCAAnalysisUsingSnyk') {
+            steps {		
+				withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+					sh 'mvn snyk:test -fn'
+				}
+			}
+    }		
   }
 }

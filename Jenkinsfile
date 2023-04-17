@@ -6,7 +6,7 @@ pipeline {
    stages{
     stage('CompileandRunSonarAnalysis') {
             steps {	
-		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=webdevops-project -Dsonar.organization=webdevops-project -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=acf8bb253651b20c4f245ee3da6928df15842552'
+		sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=webdevops-project -Dsonar.organization=webdevops-project -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=ae155b92674cfd666c2b1a193a855c873f12aed5'
 			}
     }
 
@@ -21,7 +21,7 @@ pipeline {
             steps { 
                withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
                  script{
-                 app =  docker.build("asg")
+                 app =  docker.build("hr-dev-eksproyecto")
                  }
                }
             }
@@ -30,7 +30,7 @@ pipeline {
 	stage('Push') {
             steps {
                 script{
-                    docker.withRegistry('https://659026651741.dkr.ecr.us-east-1.amazonaws.com/asg', 'ecr:us-east-1:aws-migui-credentials') {
+                    docker.withRegistry('659026651741.dkr.ecr.us-east-1.amazonaws.com/proyecto', 'ecr:us-east-1:aws-proyecto-credentials') {
                     app.push("latest")
                     }
                 }
